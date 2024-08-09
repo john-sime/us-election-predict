@@ -75,3 +75,69 @@ These formulae look a little weird, however when you consider that d+r+o=1 (i.e.
 
 In particular note the formula for the predicted Republican margin allows us to identify some factors relating to the biases in the polling data:
 * R-D = 0.038021765 + 1.178447655 * m + 0.119334625 * o
+* The constant term represents an inherent bias in the polling in favour of the Democrat candidates from 2016 and 2020, that amounts to approximately 3.8%
+* The margin coefficient represents a bias where the polls underestimate results in Democrat/Republican strongholds, amounting to approximately 17.8% of the margin
+* The other coefficient represents a bias where polls with uncommitted/third party supporters underestimate the Republican vote share, representing a net swing equivalent of 11.9% of the reported uncommitted/third party support
+
+An example breakdown of the 20 July 2024 polls compared to the prediction from the model is as follows (using the polls/predicted result for New Mexico):
+* Poll margin      D+2      (poll reports D 49% and R 47%)
+* Margin adj.      D+0.36   (margin underestimation adjustment: 17.8% of D+2)
+* Other adj.       R+0.48   (net swing to R from other: 11.9% of 4% residual)
+* Inherent bias    R+3.80
+* Prediction       R+1.92
+
+Using the error margin calculated against the test set (3.43%), we can classify each predicted result as "Tilt", "Lean" or "Likely" if the predicted margin is within 1, 2 or 4 error margins respectively, or "Safe" if the predicted margin is more than 4 error margins. The predicted results for each race is outlined in the table below and in the image of the projected electoral map. Note that no polls have been released for Delaware or the District of Columbia (3 Electoral votes each) or for the 1st and 3rd Congressional Districts of Nebraska (1 Electoral vote each) - this is presumably because the former 2 are solid Democrat strongholds, and the latter 2 are similarly solid for Republicans.
+
+      State Alpha   Party win Likelihood  pred-D  pred-R  pred-O
+      WY            R           Safe       8.09   76.38   15.53
+      ND            R           Safe      23.34   68.41    8.25
+      AR            R           Safe      18.75   63.71   17.54
+      UT            R           Safe      19.92   63.58   16.51
+      OK            R           Safe      25.69   67.10    7.21
+      KY            R           Safe      21.11   61.35   17.53
+      ID            R           Safe      21.11   61.35   17.53
+      TN            R           Safe      23.42   62.66   13.92
+      WV            R           Safe      23.44   61.09   15.46
+      VT            D           Safe      59.41   28.89   11.70
+      IN            R           Safe      30.44   60.31    9.25
+      SD            R           Safe      27.02   55.48   17.51
+      AK            R           Safe      32.78   60.04    7.18
+      AL            R           Safe      34.51   61.42    4.08
+      MT            R           Safe      32.22   58.54    9.24
+      MS            R           Safe      32.79   59.00    8.21
+      KS            R           Safe      27.06   52.34   20.60
+      MD            D           Safe      56.47   31.30   12.23
+      ME-2          R           Safe      20.09   51.04   28.88
+      SC            R           Safe      34.00   55.73   10.26
+      LA            R           Safe      35.15   56.65    8.20
+      MO            R           Safe      40.92   61.22   -2.13
+      CA            D           Safe      52.95   33.26   13.79
+      IA            R           Safe      36.34   55.47    8.19
+      HI            D           Safe      57.52   39.53    2.95
+      NE-AL         R           Safe      34.64   51.49   13.87
+      OH            R           Safe      38.67   55.21    6.12
+      TX            R           Safe      39.25   55.14    5.60
+      MA            D           Safe      45.98   31.44   22.58
+      NV            R         Likely      39.05   51.66    9.28
+      AZ            R         Likely      39.10   51.62    9.27
+      FL            R         Likely      39.11   50.99    9.90
+      WA            D         Likely      49.38   38.36   12.26
+      NC            R         Likely      41.17   50.86    7.97
+      PA            R         Likely      41.69   51.22    7.09
+      OR            D         Likely      51.66   42.28    6.06
+      GA            R         Likely      41.77   51.06    7.17
+      NY            D         Likely      51.65   43.32    5.03
+      NH            R         Likely      39.94   47.77   12.30
+      MI            R         Likely      41.03   48.69   10.29
+      NJ            R         Likely      37.64   44.89   17.46
+      WI            R         Likely      42.82   49.77    7.41
+      CO            D           Lean      49.33   42.54    8.14
+      NE-2          R           Lean      39.96   45.68   14.36
+      CT            D           Lean      48.16   42.67    9.17
+      IL            D           Lean      41.24   37.19   21.57
+      VA            R           Lean      43.38   47.43    9.19
+      ME-1          D           Tilt      36.62   34.58   28.80
+      NM            R           Tilt      48.06   49.98    1.96
+      MN            R           Tilt      45.76   47.63    6.61
+      ME-AL         R           Tilt      50.36   51.81   -2.17
+      RI            D           Tilt      37.76   36.53   25.71
