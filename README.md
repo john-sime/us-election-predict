@@ -21,6 +21,7 @@ The assumptions taken in this model and approach are as follows:
 * That the bias in polling from 2016 and 2020 will be consistent with the bias in polling for 2024
 
 The data set was split to be 70% training data and 30% test data. Cross-validation over 20 folds of the training data was performed for each of the considered polynomial orders. The performance metric chosen to evaluate the models in the cross-validation is the mean abolsute error on the Republican margin (i.e. predicted Republican vote % minus predicted Democrat vote %, versus actual Republican vote % minus Democrat vote %). Note that this metric is the equivalent to the mean absolute error on the Democrat margin.
+
 The polynomial order that had the best performance from the cross-validation was order 1 (i.e. linear formula for each feature), with a mean absolute error on margin of 3.94%. The polynomial order 2 models (i.e. quadratic models) had a mean absolute error on margin of 3.99%, so this could also be a suitable model to consider.
 The chosen model (polynomial order 1) was then tested against the test set to verify the performance level and evaluate the error margin of the model. The predictions versus actual outputs in the test set are detailed below:
 
@@ -67,7 +68,8 @@ After retraining the models using the whole datasets, the models can then be use
 * Republican model: R = -4.43007293 + 4.37198629 * d + 5.54786465 * r + 4.50305536 * o
 * Other model: O = 5.22353513 - 5.24779223 * d - 5.24266692 * r - 4.21208382 * o
 
-(note that d, r and o are the predictors representing the polling data for Democrats, Republicans and other respectively).
+(note that d, r and o are the predictors representing the polling data for Democrats, Republicans and other respectively)
+
 These formulae look a little weird, however when you consider that d+r+o=1 (i.e. vote share equals 100%) and let m=r-d (the Republican margin), then these formulae transform into:
 * Democrat model: D = 0.491830775 - 0.590508475 * m - 0.576204735 * o
 * Republican model: R = 0.52985254 + 0.58793918 * m - 0.45687011 * o
@@ -141,3 +143,14 @@ Using the error margin calculated against the test set (3.43%), we can classify 
       MN            R           Tilt      45.76   47.63    6.61
       ME-AL         R           Tilt      50.36   51.81   -2.17
       RI            D           Tilt      37.76   36.53   25.71
+
+# Final Comments
+The projected results in the table above and in the electoral map image would represent a considerable landslide for President Trump in the scenario where President Biden continued to be the Democrat candidate. The main contributing factors for this prediction from the machine learning models are:
+* The poor performance in the polls from President Biden in the period leading up to his stepping down as the candidate
+* The bias in the polling from the 2016 and 2020 elections, that incorrectly predicted the vote shares in those elections favouring the Democrat candidate by a considerable margin on both occasions, relative to the actual results.
+
+Some flaws in the model arise in states where there is a considerable amount of uncommitted voters/third party support. An obvious example is in Rhode Island, which is typically considered to be a Democrat stronghold, yet the model predicts that it will be a close race. This is due to the training data having very few states with a high proportion of voters in the "other" category, yet the poll for Rhode Island had 27% as uncommitted to either of the main two parties. Other examples of this situation are in the congressional districts of Maine, Massachusetts, Illinois, Kansas and New Jersey, each of which have been predicted to be more Republican than they are likely to actually be.
+
+I would note that the model used for this project is not very sophisticated, but it was chosen due to it being easily interpretable once the coefficients from the Regression were extracted.
+
+With additional scope for the project, I would like to consider other types of machine learning models, such as Regression Decision Trees, and compare the error margins and predictions of the other models.
