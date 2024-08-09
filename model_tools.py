@@ -104,12 +104,58 @@ def bespoke_cross_validation(folds, X_columns, y_columns, evaluation_columns, or
                 predictions_list[j] = predictions * validation_set[input_columns[j]].to_numpy()
             # Adjust the predictions and evaluate performance over the fold for the model
             for k in range(len(predictions_list[0])):
-                sum_preds = predictions_list[0][k] + predictions_list[1][k] + predictions_list[2][k] + \
-                            predictions_list[3][k]
+                # sum_preds = predictions_list[0][k] + predictions_list[1][k] + predictions_list[2][k] + \
+                #             predictions_list[3][k]
+                sum_preds = predictions_list[0][k] + predictions_list[1][k] + predictions_list[2][k]
                 predictions_list[0][k] /= sum_preds
                 predictions_list[1][k] /= sum_preds
                 predictions_list[2][k] /= sum_preds
-                predictions_list[3][k] /= sum_preds
+                # predictions_list[3][k] /= sum_preds
+            performances[order].append(performance_metric_function(predictions_list, list_y_validate))
+    average_performances = {}
+    for order, performance_list in performances.items():
+        average_performances[order] = np.mean(performance_list, axis=0)
+    return average_performances
+
+
+def bespoke_cross_validation_2(folds, X_columns, y_columns, orders, performance_metric_function):
+    """
+    This function runs cross validation across k folds for the various models, with predictions being adjusted before
+    being assessed. The models predict the  vote share %s, which in turn need to be adjusted so that the sum of vote
+    shares equals 100%.
+    :param folds: A list of dataframes which represent the k folds in the dataset.
+    :param X_columns: The columns in the dataframes that represent the X input variables.
+    :param y_columns: The columns in the dataframes that represent the y output variables.
+    :param orders: A list of integers for the polynomial orders of the models to be trained and validated.
+    :param performance_metric_function: A function from which the performance is to be measured.
+    :return: A dictionary containing the mean values across the folds of the data of the performance metric, for each
+    order of model.
+    """
+    performances = {order: [] for order in orders}
+    for i, fold in enumerate(folds):
+        # Given the selected fold, create the training and validation sets, and separate into X,y numpy arrays
+        validation_set = fold
+        validation_xys = convert_to_xys(validation_set, X_columns, y_columns)
+        training_folds = [folds[j] for j in range(len(folds)) if j != i]
+        training_set = pd.concat(training_folds)
+        training_xys = convert_to_xys(training_set, X_columns, y_columns)
+        for order in orders:
+            # Iterate for each model
+            predictions_list = [np.zeros(1) for _ in range(len(training_xys))]  # i.e. [[0], [0], [0]]
+            list_y_validate = [0 for _ in range(len(validation_xys))]  # i.e. [0, 0, 0]
+            for j in range(len(training_xys)):  # also equal to the len of y_columns (i.e. 3)
+                # Create, train and predict from the model for each y output variable
+                X_train, y_train = training_xys[j]
+                X_validate, y_validate = validation_xys[j]
+                list_y_validate[j] = validation_set[y_columns[j]].to_numpy()
+                model = fit_model(X_train, y_train, order)
+                predictions_list[j] = model.predict(X_validate)  # an array of predictions for X in validation set
+            # Adjust the predictions and evaluate performance over the fold for the model
+            for k in range(len(predictions_list[0])):  # i.e. range(3)
+                sum_preds = predictions_list[0][k] + predictions_list[1][k] + predictions_list[2][k]
+                predictions_list[0][k] /= sum_preds
+                predictions_list[1][k] /= sum_preds
+                predictions_list[2][k] /= sum_preds
             performances[order].append(performance_metric_function(predictions_list, list_y_validate))
     average_performances = {}
     for order, performance_list in performances.items():
