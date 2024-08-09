@@ -90,6 +90,8 @@ An example breakdown of the 20 July 2024 polls compared to the prediction from t
 
 Using the error margin calculated against the test set (3.43%), we can classify each predicted result as "Tilt", "Lean" or "Likely" if the predicted margin is within 1, 2 or 4 error margins respectively, or "Safe" if the predicted margin is more than 4 error margins. The predicted results for each race is outlined in the table below and in the image of the projected electoral map. Note that no polls have been released for Delaware or the District of Columbia (3 Electoral votes each) or for the 1st and 3rd Congressional Districts of Nebraska (1 Electoral vote each) - this is presumably because the former 2 are solid Democrat strongholds, and the latter 2 are similarly solid for Republicans.
 
+https://github.com/john-sime/us-election-predict/blob/main/US%20Election%202024%20projection%2020-Jul-24.png
+
       State Alpha   Party win Likelihood  pred-D  pred-R  pred-O
       WY            R           Safe       8.09   76.38   15.53
       ND            R           Safe      23.34   68.41    8.25
