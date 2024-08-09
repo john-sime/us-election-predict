@@ -4,7 +4,9 @@ The purpose of this model is to investigate the bias in US presidential election
 Areas of particular interest are how bias may vary between Democrat and Republican strongholds and in battleground states, as well as how the uncommitted/other proportion of the electorate in a state impacts on this bias.
 # Data - used for model training and predictions
 The data used to train the model has been collated by myself from various sources. The complete spreadsheet including notes on data cleaning and data sources can be found at:
+
 https://docs.google.com/spreadsheets/d/1byPOPY8E6ImigvaPBOo7npWcA5zB4IWwFhoRuKYUzpg/edit?usp=sharing
+
 The highlights are as follows:
 * The inputs for training the model are the final polls before the 2016 and 2020 US elections, with a breakdown state by state (and congressional district where applicable). These are divided into poll % shares for the Democrat candidate, the Republican candidate and a third column for the residual (denoted as "other").
 * The outputs for training the model are the actual election results from 2016 and 2020, also broken down by state and congressional district.
@@ -61,13 +63,15 @@ The root mean squared errors on these predictions for the Democrat, Republican a
 
 # Results and comments on bias
 After retraining the models using the whole datasets, the models can then be used to make predictions based on the recent polling for the 2024 election. The formulae produced from training the models are:
-Democrat model: D = 0.20284186 + 0.87949739 * d - 0.30151956 * r - 0.28721582 * o
-Republican model: R = -4.43007293 + 4.37198629 * d + 5.54786465 * r + 4.50305536 * o
-Other model: O = 5.22353513 - 5.24779223 * d - 5.24266692 * r - 4.21208382 * o
+* Democrat model: D = 0.20284186 + 0.87949739 * d - 0.30151956 * r - 0.28721582 * o
+* Republican model: R = -4.43007293 + 4.37198629 * d + 5.54786465 * r + 4.50305536 * o
+* Other model: O = 5.22353513 - 5.24779223 * d - 5.24266692 * r - 4.21208382 * o
+
 (note that d, r and o are the predictors representing the polling data for Democrats, Republicans and other respectively).
 These formulae look a little weird, however when you consider that d+r+o=1 (i.e. vote share equals 100%) and let m=r-d (the Republican margin), then these formulae transform into:
-Democrat model: D = 0.491830775 - 0.590508475 * m - 0.576204735 * o
-Republican model: R = 0.52985254 + 0.58793918 * m - 0.45687011 * o
-Other model: O = -0.021694445 + 0.002562655 * m + 1.033145755 * o
+* Democrat model: D = 0.491830775 - 0.590508475 * m - 0.576204735 * o
+* Republican model: R = 0.52985254 + 0.58793918 * m - 0.45687011 * o
+* Other model: O = -0.021694445 + 0.002562655 * m + 1.033145755 * o
+
 In particular note the formula for the predicted Republican margin allows us to identify some factors relating to the biases in the polling data:
-R-D = 0.038021765 + 1.178447655 * m + 0.119334625 * o
+* R-D = 0.038021765 + 1.178447655 * m + 0.119334625 * o
