@@ -5,7 +5,7 @@ import pandas as pd
 from math_tools import split_n_by_k
 
 
-path_csv = pl.Path(os.getcwd()) / f'US Election Data - csv.csv'
+path_csv = pl.Path(os.getcwd()) / f'US Election Data - csv (2).csv'
 with open(path_csv, 'rb') as file:
     data = pd.read_csv(file, index_col=[0, 1])
 
@@ -63,8 +63,8 @@ def k_folds(dataframe, k):
 
 def convert_to_xys(dataframe, X_columns, y_columns):
     """
-    This function takes a dataframe, and outputs a tuple of numpy arrays for each y, where the tuple is in the form
-    (X,y).
+    This function takes a dataframe, and outputs a list of tuples of numpy arrays for each y, where the tuple is in the
+    form (X,y).
     :param dataframe: The data as a Pandas dataframe.
     :param X_columns: A list of the column names in the dataframe which represent the X input variables.
     :param y_columns: A list of the column names in the dataframe which represent the y output variables.
