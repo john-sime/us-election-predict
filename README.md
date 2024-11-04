@@ -1,4 +1,15 @@
 # us-election-predict
+# Update (3 Nov 2024)
+This model has been updated to reflect the polls at 3 November 2024, which are used for the final projections of the election results prior to the actual election date (5 Nov 2024).
+
+The margins for the map below are calculated in proportion to the error margin of 3.83%:
+* Tilt: 0%-3.83% lead
+* Lean: 3.83%-7.66% lead
+* Likely: 7.66%-15.33% lead
+* Safe: 15.33%+ lead
+
+![03-Nov-2024 projection](https://github.com/john-sime/us-election-predict/blob/main/US%20Election%202024%20projection%2003-Nov-24.png)
+
 # Update (5 Oct 2024)
 This model has been updated to reflect the polls at 5 October 2024, which are used to project the results of the election.
 
