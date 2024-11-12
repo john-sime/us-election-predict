@@ -1,4 +1,7 @@
 # us-election-predict
+# Retrospective on the US 2024 Election
+You can read the retrospective report ![here](https://github.com/john-sime/us-election-predict/blob/main/US%20Election%20Retrospective.pdf). The report evaluates this model's effectiveness at predicting the US election results, along with data analysis regarding biases in the model compared to biases in the polling data in the lead up to the election.
+
 # Update (3 Nov 2024)
 This model has been updated to reflect the polls at 3 November 2024, which are used for the final projections of the election results prior to the actual election date (5 Nov 2024).
 
